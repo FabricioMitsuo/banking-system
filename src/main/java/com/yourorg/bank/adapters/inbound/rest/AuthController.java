@@ -3,6 +3,7 @@ package com.yourorg.bank.adapters.inbound.rest;
 import com.yourorg.bank.ports.external.BiometriaPort;
 import com.yourorg.bank.ports.persistence.ClienteRepositoryPort;
 import com.yourorg.bank.ports.external.NotificacaoPort;
+import lombok.var;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,12 @@ public class AuthController {
     if (!faceOk) return ResponseEntity.status(401).body("Falha na biometria");
     String code = twoFaService.generate(cliente.getId());
     notificacao.enviarSms(cliente.getTelefone(), "Seu código 2FA: " + code);
-    return ResponseEntity.ok(java.util.Map.of("userId", cliente.getId(), "2faPending", true));
+
+    java.util.Map<String, Object> body = new java.util.HashMap<>();
+    body.put("userId", cliente.getId());
+    body.put("2faPending", true);
+    return ResponseEntity.ok(body);
+
   }
 
   @PostMapping("/verify-2fa")
