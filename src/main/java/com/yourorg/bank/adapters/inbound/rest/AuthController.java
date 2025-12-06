@@ -7,6 +7,10 @@ import lombok.var;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -37,13 +41,8 @@ public class AuthController {
 
   }
 
-  @PostMapping("/verify-2fa")
-  public ResponseEntity<?> verify2fa(@RequestBody TwoFaRequest req) {
-    boolean ok = twoFaService.verify(req.userId, req.code);
-    if (!ok) return ResponseEntity.status(401).build();
-    return ResponseEntity.ok(java.util.Map.of("status","autenticado"));
-  }
-}
+    }
+
 
 class LoginRequest { public String email; public String senha; public String faceBase64; }
 class TwoFaRequest { public String userId; public String code; }
@@ -53,3 +52,10 @@ class InMemory2FaService {
   public String generate(String userId) { String code = String.valueOf(new java.util.Random().nextInt(900000)+100000); map.put(userId, code); return code; }
   public boolean verify(String userId, String code) { return code != null && code.equals(map.get(userId)); }
 }
+//     public void setFaceTemplateId (String faceTemplateId){
+//       this.faceTemplateId = faceTemplateId;
+//     }
+//     public LocalDateTime getCriadoEm () {
+//       return criadoEm;
+//     }
+// }
