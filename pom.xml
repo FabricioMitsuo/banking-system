@@ -88,12 +88,6 @@
     </dependency>
 
     <!-- PLAYWRIGHT (para automações e testes manuais) -->
-    <dependency>
-      <groupId>com.microsoft.playwright</groupId>
-      <artifactId>playwright</artifactId>
-      <version>${playwright.version}</version>
-    </dependency>
-
     <!-- BANCO DE DADOS (opcional) -->
     <dependency>
       <groupId>com.h2database</groupId>
